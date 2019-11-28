@@ -17,7 +17,7 @@ ARG USER_GID=$USER_UID
 
 # Configure apt and install packages
 RUN apt-get update \
-    && apt-get -y install curl wget git python${PYTHON_VERSION} python${PIP_VERSION}-pip sudo 2>&1
+    && apt-get -y install curl wget git sudo 2>&1
 
 # Python setting
 RUN apt-get -y install python${PYTHON_VERSION} python${PIP_VERSION}-pip 2>&1 \
