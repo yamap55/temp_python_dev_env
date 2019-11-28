@@ -1,4 +1,11 @@
 # Python 開発環境
+## 環境詳細
+- Python : 3.7
+- Spark : 2.4.4
+- Hadoop : 2.7
+
+※変更したい場合はDockerfileの上部を確認
+
 ## 開発環境
 ### 事前準備
 - Dockerインストール
@@ -19,5 +26,13 @@
 1. 開発環境起動
 2. 下記コマンド実行
     - `python setup.py bdist_wheel`
-3. `dist` フォルダ内に.whlファイルが作成されています。
+3. `dist` フォルダ内に.whlファイルが作成される
 
+## 注意
+- spark起動時にWARNINGが出力される
+```
+WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+```
