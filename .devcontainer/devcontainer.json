@@ -1,24 +1,20 @@
 // ref. https://github.com/Microsoft/vscode-remote-try-python
 {
 	"name": "Python Sample",
-	"dockerFile": "Dockerfile",
-	// Use 'appPort' to create a container with published ports. If the port isn't working, be sure
-	// your server accepts connections from all interfaces (0.0.0.0 or '*'), not just localhost.
-	// In this case, "--host 0.0.0.0 --port 9000" needs to be passed into Flask to make this happen.
-	// "appPort": [
-	// 	9000
-	// ],
+	"dockerFile": "../Dockerfile",
+
 	// Comment out the next line to run as root instead. Linux users, 
 	// update Dockerfile with your user's UID/GID if not 1000.
 	"runArgs": [
 		"-u",
 		"vscode"
 	],
+
 	// Use 'settings' to set *default* container specific settings.json values on container create. 
 	// You can edit these settings after create using File > Preferences > Settings > Remote.
 	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash",
-		"python.pythonPath": "/usr/local/bin/python",
+		"python.pythonPath": "/usr/bin/python",
 		"python.linting.pylintEnabled": false,
 		"python.linting.enabled": true,
 		"python.linting.flake8Enabled": true,
@@ -36,9 +32,9 @@
 			"editor.tabSize": 4
 		}
 	},
+
 	// Specifies a command to run after the container is created
-	// "postCreateCommand": "sudo pip install --proxy http://xxx.xxx.xxx.xxx:8080 -r requirements.txt",
-	"postCreateCommand": "sudo pip install --proxy http://10.63.0.11:8080 -r requirements.txt",
+	"postCreateCommand": "sudo pip install -r requirements.txt && sudo pip install -r requirements_dev.txt",
 	"extensions": [
 		"ms-python.python"
 	]
