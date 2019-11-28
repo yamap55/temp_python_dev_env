@@ -132,3 +132,10 @@ dmypy.json
 
 # work dir
 work
+
+# mac OS
+.DS_Store
+
+# Windows
+[Dd]esktop.ini
+Thumbs.db
