@@ -30,5 +30,9 @@
 
   // Specifies a command to run after the container is created
   "postCreateCommand": "sudo pip install -r requirements.txt && sudo pip install -r requirements_dev.txt",
-  "extensions": ["ms-python.python", "esbenp.prettier-vscode"]
+  "extensions": [
+    "ms-python.python",
+    "esbenp.prettier-vscode",
+    "njpwerner.autodocstring"
+  ]
 }
