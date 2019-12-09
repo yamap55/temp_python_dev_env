@@ -23,6 +23,10 @@
     "editor.codeActionsOnSave": {
       "source.organizeImports": true
     },
+    "autoDocstring.docstringFormat": "numpy",
+    "autoDocstring.startOnNewLine": true,
+    "autoDocstring.generateDocstringOnEnter": true,
+    "autoDocstring.guessTypes": true,
     "[python]": {
       "editor.tabSize": 4
     }
