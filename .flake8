@@ -6,3 +6,4 @@ max-line-length=100
 ;D403 First word of the first line should be properly capitalized
 ;D413: Missing blank line after last section
 ignore = D400,D401,D403,D413
+per-file-ignores=tests/*:D
