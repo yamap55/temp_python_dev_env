@@ -28,6 +28,9 @@
     - `python setup.py bdist_wheel`
 3. `dist` フォルダ内に.whlファイルが作成される
 
+## Unit Test実行
+TODO
+
 ## 注意
 - spark起動時にWARNINGが出力される
 ```
