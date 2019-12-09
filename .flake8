@@ -1,3 +1,3 @@
 [flake8]
 max-line-length=100
-ignore = D400,D401,D403
+ignore = D400,D401,D403,D413
