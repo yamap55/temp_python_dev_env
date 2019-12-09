@@ -17,11 +17,15 @@ ARG USER_GID=$USER_UID
 
 # Configure apt and install packages
 RUN apt-get update \
-    && apt-get -y install curl wget git sudo 2>&1
+    && apt-get -y install curl wget git sudo \
+        python${PYTHON_VERSION} python${PIP_VERSION}-pip \
+    # Clean up
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
 
 # Python setting
-RUN apt-get -y install python${PYTHON_VERSION} python${PIP_VERSION}-pip 2>&1 \
-    && rm -f /usr/bin/python \
+RUN rm -f /usr/bin/python \
     && rm -f /usr/bin/pip \
     && ln -s /usr/bin/python${PYTHON_VERSION} /usr/bin/python \
     && ln -s /usr/bin/pip${PIP_VERSION} /usr/bin/pip
@@ -38,11 +42,6 @@ RUN groupadd --gid $USER_GID $USERNAME \
     # Add sudo support for non-root user
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
-
-# Clean up
-RUN apt-get autoremove -y \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
 
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=
