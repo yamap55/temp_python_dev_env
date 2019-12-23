@@ -13,5 +13,12 @@ jobs:
 
     - name: Build Image
       run: |
-        echo ${GITHUB_SHA::8}
-        cd docker/ && docker build -f Dockerfile_original.dockerfile -t docker.pkg.github.com/yamap55/original:${GITHUB_SHA::8} .
+        cd docker/ && docker build -f Dockerfile_original.dockerfile -t original .
+
+    - name: Push to Github Package Registry
+      run: |
+        docker login docker.pkg.github.com
+        docker tag original docker.pkg.github.com/yamap55/original:${GITHUB_SHA::8}
+        docker push docker.pkg.github.com/yamap55/original:${GITHUB_SHA::8}
+        docker tag original docker.pkg.github.com/yamap55/original:latest
+        docker push docker.pkg.github.com/yamap55/original:latest
