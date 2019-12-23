@@ -17,7 +17,7 @@ ARG USER_GID=$USER_UID
 
 # Configure apt and install packages
 RUN apt-get update \
-    && apt-get -y install curl wget git sudo \
+    && apt-get --no-install-recommends -y install wget git sudo vim tzdata \
         python${PYTHON_VERSION} python${PIP_VERSION}-pip \
     # Clean up
     && apt-get autoremove -y \
