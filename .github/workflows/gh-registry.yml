@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-18.04
     timeout-minutes: 300
     steps:
-    - uses: actions/checkout@develop
+    - uses: actions/checkout@v1
 
     - name: Build Image
       run: |
