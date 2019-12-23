@@ -17,6 +17,7 @@ jobs:
 
     - name: Push to Github Package Registry
       run: |
+        docker login docker.pkg.github.com -u ${GITHUB_ACTOR} -p ${GITHUB_TOKEN}
         docker tag original docker.pkg.github.com/yamap55/original:${GITHUB_SHA::8}
         docker push docker.pkg.github.com/yamap55/original:${GITHUB_SHA::8}
         docker tag original docker.pkg.github.com/yamap55/original:latest
