@@ -1,4 +1,4 @@
-FROM docker.pkg.github.com/yamap55/python_dev_env/original:1.0
+FROM docker.pkg.github.com/yamap55/python_dev_env/original:latest
 
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
