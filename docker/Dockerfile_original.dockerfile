@@ -26,6 +26,11 @@ RUN rm -rf /var/lib/apt/lists/* \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
+# pyright install
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install --global pyright
+
 # copy requirements files
 COPY ./requirements.txt /tmp/requirements.txt
 COPY ./requirements-dev.txt /tmp/requirements-dev.txt
