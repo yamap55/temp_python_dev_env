@@ -1,41 +1,52 @@
 # Python 開発環境
-## 環境詳細
-- Python : 3.7
-- Spark : 2.4.4
-- Hadoop : 2.7
 
-※変更したい場合はDockerfileの上部を確認
+## 環境詳細
+
+- Python : 3.8
+- PostgreSQL :
+
+※変更したい場合は Dockerfile の上部を確認
 
 ## 開発環境
+
 ### 事前準備
-- Dockerインストール
-- VSCodeインストール
-- VSCodeの拡張機能「Remote - Containers」インストール
-    - https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
-- 本リポジトリのclone
+
+- Docker インストール
+- VSCode インストール
+- VSCode の拡張機能「Remote - Containers」インストール
+  - https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
+- 本リポジトリの clone
 
 ### 開発手順
-1. VSCode起動
+
+1. VSCode 起動
 2. 左下の緑色のアイコンクリック
 3. 「Remote-Containers - Open Folder in Container...」クリック
 4. しばらく待つ
-    - 初回の場合コンテナimageの取得や作成が行われる
+   - 初回の場合コンテナ image の取得や作成が行われる
 5. 起動したら開発可能
 
 ## ライブラリ作成手順
+
 1. 開発環境起動
 2. 下記コマンド実行
-    - `python setup.py bdist_wheel`
-3. `dist` フォルダ内に.whlファイルが作成される
+   - `python setup.py bdist_wheel`
+3. `dist` フォルダ内に.whl ファイルが作成される
 
-## Unit Test実行
-TODO
+## PostgreSQL 接続設定
 
-## 注意
-- spark起動時にWARNINGが出力される
-```
-WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
-Setting default log level to "WARN".
-To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-```
+1. VSCode の左側のバーの PostgreSQL Explor アイコンを選択
+2. 右上「+」で設定を開始
+
+   - `/project/docker-compose.yml` の db 部を参考に設定
+   - hostname : db
+   - user : root
+   - password : password-changeme
+   - port : 5432
+   - ssl connection? : Standard Connection
+   - show database : project-db
+   - display name : 任意
+
+3. PostgreSQL Explor に設定が表示される
+   - `>` をクリックしていくことで各テーブルが確認可能
+   - 「右クリック -> New Query」 で Query の実行が可能

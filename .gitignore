@@ -139,3 +139,6 @@ work
 # Windows
 [Dd]esktop.ini
 Thumbs.db
+
+# vscode
+.vscode/settings.json

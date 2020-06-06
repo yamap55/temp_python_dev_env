@@ -1,7 +1,11 @@
 FROM docker.pkg.github.com/yamap55/python_dev_env/original:latest
 
-# Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Tokyo
+RUN echo $TZ > /etc/timezone
+
+ARG WORKDIR=/project
+WORKDIR ${WORKDIR}
 
 # Or your actual UID, GID on Linux if not the default 1000
 ARG USERNAME=vscode
@@ -15,6 +19,16 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
-# Switch back to dialog for any ad-hoc use of apt-get
+# terminal setting
+RUN wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -O /home/vscode/.git-completion.bash \
+    && wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -O /home/vscode/.git-prompt.sh \
+    && chmod a+x /home/vscode/.git-completion.bash \
+    && chmod a+x /home/vscode/.git-prompt.sh \
+    && echo -e "\n\
+    source ~/.git-completion.bash\n\
+    source ~/.git-prompt.sh\n\
+    export PS1='\\[\\e]0;\\u@\\h: \\w\\a\\]\${debian_chroot:+(\$debian_chroot)}\\[\\033[01;32m\\]\\u\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\[\\033[1;30m\\]\$(__git_ps1)\\[\\033[0m\\] \\$ '\n\
+    " >>  /home/vscode/.bashrc
+
 ENV DEBIAN_FRONTEND=
 CMD ["/bin/bash"]

@@ -3,24 +3,21 @@ on:
   push:
     branches:
       - develop
-
 jobs:
   build-and-push:
     runs-on: ubuntu-18.04
     timeout-minutes: 300
     steps:
-    - uses: actions/checkout@v1
-
-    - name: Build Image
-      run: |
-        cd docker/ && docker build -f Dockerfile_original.dockerfile -t original .
-
-    - name: Push to Github Package Registry
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        docker login docker.pkg.github.com -u ${GITHUB_ACTOR} -p ${GITHUB_TOKEN}
-        docker tag original docker.pkg.github.com/yamap55/python_dev_env/original:${GITHUB_SHA::8}
-        docker push docker.pkg.github.com/yamap55/python_dev_env/original:${GITHUB_SHA::8}
-        docker tag original docker.pkg.github.com/yamap55/python_dev_env/original:latest
-        docker push docker.pkg.github.com/yamap55/python_dev_env/original:latest
+      - uses: actions/checkout@v1
+      - name: Build Image
+        run: |
+          docker build -f docker/Dockerfile_original.dockerfile -t original .
+      - name: Push to Github Package Registry
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          docker login docker.pkg.github.com -u ${GITHUB_ACTOR} -p ${GITHUB_TOKEN}
+          docker tag original docker.pkg.github.com/yamap55/python_dev_env/original_python_dev_env:${GITHUB_SHA::8}
+          docker push docker.pkg.github.com/yamap55/python_dev_env/original_python_dev_env:${GITHUB_SHA::8}
+          docker tag original docker.pkg.github.com/yamap55/python_dev_env/original_python_dev_env:latest
+          docker push docker.pkg.github.com/yamap55/python_dev_env/original_python_dev_env:latest

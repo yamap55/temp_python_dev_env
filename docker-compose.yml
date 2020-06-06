@@ -1,0 +1,32 @@
+version: "3"
+services:
+  python_dev_env:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_original.dockerfile
+      args:
+        WORKDIR: /project
+    depends_on:
+      - db
+    volumes:
+      - .:/project
+      - ${USERPROFILE-~}/.ssh:/home/vscode/.ssh
+    image: python_dev_env-image
+    container_name: python_dev_env-container
+
+  db: # PostgreSQLクライントからの接続の際のhostnameはこの'db'を使う
+    build: ./.devcontainer/postgresql
+    volumes:
+      - ./logs/postgresql:/var/log/postgresql
+    ports:
+      - "15432:5432"
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_DB: "project-db"
+      POSTGRES_PASSWORD: "password-changeme" # TODO: change
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=ja_JP.UTF-8"
+      TZ: "Asia/Tokyo"
+    tty: true
+    container_name: python_dev_env-rdb
+    networks:
+      - default
