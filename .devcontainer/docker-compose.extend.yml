@@ -1,0 +1,6 @@
+version: "3"
+services:
+  python_dev_env:
+    build:
+      dockerfile: .devcontainer/Dockerfile_devcontainer.dockerfile
+    command: /bin/sh -c "while sleep 1000; do :; done"

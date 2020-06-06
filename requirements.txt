@@ -1,1 +1,2 @@
-pyspark==2.4.4
+# sample
+psycopg2==2.8.5

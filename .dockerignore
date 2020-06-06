@@ -4,3 +4,4 @@ dist
 work
 .coverage
 .git
+.devcontainer/

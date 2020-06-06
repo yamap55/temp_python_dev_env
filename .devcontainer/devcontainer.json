@@ -1,45 +1,56 @@
 // ref. https://github.com/Microsoft/vscode-remote-try-python
 {
   "name": "Python Sample",
-  "dockerFile": "./Dockerfile_devcontainer.dockerfile",
+  // Use docker-compose.extend.yml to run a command that keeps the container running.
+  "dockerComposeFile": ["../docker-compose.yml", "docker-compose.extend.yml"],
+  "service": "python_dev_env",
+  "workspaceFolder": "/project",
+  "shutdownAction": "stopCompose",
   // Comment out the next line to run as root instead. Linux users,
   // update Dockerfile with your user's UID/GID if not 1000.
-  "runArgs": [
-    "-u",
-    "vscode"
-  ],
+  "remoteUser": "vscode",
   // Use 'settings' to set *default* container specific settings.json values on container create.
   // You can edit these settings after create using File > Preferences > Settings > Remote.
   "settings": {
-    "terminal.integrated.shell.linux": "/bin/bash",
+    "files.eol": "\n",
     "files.insertFinalNewline": true,
-    "python.pythonPath": "/usr/bin/python",
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "python.pythonPath": "/usr/local/bin/python",
     "python.linting.pylintEnabled": false,
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
-    // "python.linting.flake8Args": ["--ignore=E111"], エラー抑止サンプル
+    "python.linting.flake8Args": ["--config=.flake8"],
     "python.linting.lintOnSave": true,
-    "python.formatting.provider": "autopep8",
-    "python.formatting.autopep8Args": [
-      "--indent-size=4"
-    ],
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": ["--line-length", "100"],
+    "python.testing.pytestArgs": ["--verbose", "--showlocals"],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.analysis.diagnosticMode": "workspace",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.organizeImports": true
     },
-    "autoDocstring.docstringFormat": "numpy",
-    "autoDocstring.startOnNewLine": true,
-    "autoDocstring.generateDocstringOnEnter": true,
-    "autoDocstring.guessTypes": true,
     "[python]": {
       "editor.tabSize": 4
-    }
+    },
+    "[json]": {
+      "editor.tabSize": 2
+    },
+    "[yaml]": {
+      "editor.tabSize": 2
+    },
+    "autoDocstring.docstringFormat": "numpy",
+    "autoDocstring.startOnNewLine": true
   },
-  // Specifies a command to run after the container is created
-  "postCreateCommand": "sudo pip install -r requirements.txt && sudo pip install -r requirements_dev.txt",
   "extensions": [
     "ms-python.python",
     "esbenp.prettier-vscode",
-    "njpwerner.autodocstring"
+    "njpwerner.autodocstring",
+    "redhat.vscode-yaml",
+    "eamodio.gitlens",
+    "ms-pyright.pyright",
+    "ckolkman.vscode-postgres"
   ]
 }

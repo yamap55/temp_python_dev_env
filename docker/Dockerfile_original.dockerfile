@@ -1,36 +1,37 @@
-FROM openjdk:8-jdk-slim
+ARG PYTHON_VERSION=3.8.3
+FROM python:${PYTHON_VERSION}
 
-# Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Tokyo
+RUN echo $TZ > /etc/timezone
 
-# Spark env setting
-ENV SPARK_VERSION 2.4.4
-ENV HADOOP_VERSION 2.7
-ENV SPARK_HOME /spark
-ENV PYTHON_VERSION 3.7
-ENV PIP_VERSION 3
+ARG WORKDIR=/project
+WORKDIR ${WORKDIR}
+
+# change default shell
+SHELL ["/bin/bash", "-c"]
+RUN chsh -s /bin/bash
+
+# Increase timeout for apt-get to 300 seconds
+RUN /bin/echo -e "\n\
+    Acquire::http::Timeout \"300\";\n\
+    Acquire::ftp::Timeout \"300\";" >> /etc/apt/apt.conf.d/99timeout
 
 # Configure apt and install packages
-RUN apt-get update \
-    && apt-get --no-install-recommends -y install wget git sudo vim tzdata \
-        python${PYTHON_VERSION} python${PIP_VERSION}-pip \
-    # Clean up
+RUN rm -rf /var/lib/apt/lists/* \
+    && apt-get update \
+    && apt-get upgrade -y \
+    && apt-get -y install sudo vim tzdata less \
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-# Python setting
-RUN rm -f /usr/bin/python \
-    && rm -f /usr/bin/pip \
-    && ln -s /usr/bin/python${PYTHON_VERSION} /usr/bin/python \
-    && ln -s /usr/bin/pip${PIP_VERSION} /usr/bin/pip
+# copy requirements files
+COPY ./requirements.txt /tmp/requirements.txt
+COPY ./requirements-dev.txt /tmp/requirements-dev.txt
 
-# download spark
-RUN wget https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz \
-    && tar -xvzf spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz \
-    && mv spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} spark \
-    && rm spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
+# library install
+RUN pip install -r /tmp/requirements.txt -r /tmp/requirements-dev.txt
 
-# Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=
 CMD ["/bin/bash"]
