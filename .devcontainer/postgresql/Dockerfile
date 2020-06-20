@@ -14,6 +14,8 @@ ARG WORKDIR=/project
 ADD ./postgresql.conf /etc/postgresql/postgresql.conf
 
 COPY ./python_dev_env-docker-entrypoint.sh /usr/local/bin/
-RUN ln -s /usr/local/bin/python_dev_env-docker-entrypoint.sh /
-ENTRYPOINT ["python_dev_env-docker-entrypoint.sh"]
+RUN ln -s /usr/local/bin/python_dev_env-docker-entrypoint.sh / \
+    && chmod +x /usr/local/bin/python_dev_env-docker-entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/python_dev_env-docker-entrypoint.sh"]
 CMD ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]

@@ -1,4 +1,4 @@
-FROM docker.pkg.github.com/yamap55/python_dev_env/original:latest
+FROM docker.pkg.github.com/yamap55/python_dev_env/original_python_dev_env:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Tokyo
