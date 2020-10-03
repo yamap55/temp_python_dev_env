@@ -28,6 +28,12 @@
     "python.testing.nosetestsEnabled": false,
     "python.testing.pytestEnabled": true,
     "python.analysis.diagnosticMode": "workspace",
+    "python.jediEnabled": false,
+    "python.languageServer": "Pylance",
+    "python.analysis.typeCheckingMode": "basic",
+    "vsintellicode.python.completionsEnabled": true,
+    "vsintellicode.features.python.deepLearning": "enabled",
+    "vsintellicode.modify.editor.suggestSelection": "enabled",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.organizeImports": true
@@ -50,7 +56,8 @@
     "njpwerner.autodocstring",
     "redhat.vscode-yaml",
     "eamodio.gitlens",
-    "ms-pyright.pyright",
-    "ckolkman.vscode-postgres"
+    "ckolkman.vscode-postgres",
+    "ms-python.vscode-pylance",
+    "VisualStudioExptTeam.vscodeintellicode"
   ]
 }
