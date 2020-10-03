@@ -16,6 +16,8 @@
 - VSCode の拡張機能「Remote - Containers」インストール
   - https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
 - 本リポジトリの clone
+- `.env` を作成
+  - 環境変数を使用する場合は指定、特に使用しない場合は空ファイルで作成
 
 ### 開発手順
 
